@@ -4,6 +4,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { FaRegEyeSlash, FaRegEye } from 'react-icons/fa'
 
+import { login } from '@/actions/login'
 import { CardWrapper } from '@/components/auth/card-wrapper'
 import { Button } from '@/components/ui/button'
 import {
@@ -24,6 +25,7 @@ type FormType = z.infer<typeof loginSchema>
 
 export const LoginForm = () => {
   const [viewPassword, setViewPassword] = React.useState(false)
+  const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<FormType>({
     resolver: zodResolver(loginSchema),
@@ -34,12 +36,18 @@ export const LoginForm = () => {
     },
   })
 
-  const { control } = form
+  const { control, handleSubmit } = form
+
+  const onSubmit = React.useCallback((values: FormType) => {
+    startTransition(() => {
+      login(values)
+    })
+  }, [])
 
   return (
     <CardWrapper showSocial>
       <Form {...form}>
-        <form className='space-y-6'>
+        <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
           <div className='space-y-4'>
             <FormField
               control={control}
@@ -56,6 +64,7 @@ export const LoginForm = () => {
                       placeholder='exemplo@email.com'
                       type='email'
                       className='focus-visible:ring-transparent'
+                      disabled={isPending}
                     />
                   </FormControl>
 
@@ -78,6 +87,7 @@ export const LoginForm = () => {
                         placeholder='********'
                         type={viewPassword ? 'text' : 'password'}
                         className='focus-visible:ring-transparent'
+                        disabled={isPending}
                       />
 
                       <Button
@@ -106,7 +116,11 @@ export const LoginForm = () => {
             />
           </div>
 
-          <Button type='submit' className='w-full text-white font-bold'>
+          <Button
+            type='submit'
+            className='w-full text-white font-bold'
+            disabled={isPending}
+          >
             Entrar no sistema
           </Button>
         </form>

@@ -26,6 +26,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} src/lib/seed.ts"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^1.3.3",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "5.9.1",
     "@radix-ui/react-label": "^2.0.2",
@@ -35,6 +36,7 @@
     "clsx": "^2.1.0",
     "lucide-react": "^0.316.0",
     "next": "14.0.4",
+    "next-auth": "^5.0.0-beta.9",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",
