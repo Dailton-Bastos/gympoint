@@ -45,7 +45,7 @@ export const LoginForm = () => {
   }, [])
 
   return (
-    <CardWrapper showSocial>
+    <CardWrapper>
       <Form {...form}>
         <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
           <div className='space-y-4'>
