@@ -8,3 +8,9 @@ export const loginSchema = z.object({
     message: 'Senha obrigatória',
   }),
 })
+
+export const forgotSchema = z.object({
+  email: z.string().email({
+    message: 'Email obrigatório',
+  }),
+})

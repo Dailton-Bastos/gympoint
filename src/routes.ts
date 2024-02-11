@@ -3,7 +3,7 @@
  * * These routes will redirect logged in users to /admin/members
  * @type {string[]}
  */
-export const authRoutes: string[] = ['/auth/login']
+export const authRoutes: string[] = ['/auth/login', '/auth/forgot']
 
 /**
  * The prefix for API authentication routes

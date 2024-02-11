@@ -2,9 +2,8 @@
 
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { FaRegEyeSlash, FaRegEye } from 'react-icons/fa'
 
-import { login } from '@/actions/login'
+import { forgot } from '@/actions/forgot'
 import { CardWrapper } from '@/components/auth/card-wrapper'
 import { Button } from '@/components/ui/button'
 import {
@@ -16,23 +15,21 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { loginSchema } from '@/schemas'
+import { forgotSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import * as z from 'zod'
 
-type FormType = z.infer<typeof loginSchema>
+type FormType = z.infer<typeof forgotSchema>
 
-export const LoginForm = () => {
-  const [viewPassword, setViewPassword] = React.useState(false)
+export const ForgotForm = () => {
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<FormType>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(forgotSchema),
 
     defaultValues: {
       email: '',
-      password: '',
     },
   })
 
@@ -40,7 +37,7 @@ export const LoginForm = () => {
 
   const onSubmit = React.useCallback((values: FormType) => {
     startTransition(() => {
-      login(values)
+      forgot(values)
     })
   }, [])
 
@@ -72,48 +69,6 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={control}
-              name='password'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className='font-bold text-sm'>SUA SENHA</FormLabel>
-
-                  <FormControl>
-                    <div className='relative'>
-                      <Input
-                        {...field}
-                        placeholder='********'
-                        type={viewPassword ? 'text' : 'password'}
-                        className='focus-visible:ring-transparent'
-                        disabled={isPending}
-                      />
-
-                      <Button
-                        type='button'
-                        variant='link'
-                        className='absolute top-0 end-0 p-3.5 rounded-e-md'
-                        onClick={() => setViewPassword((prev) => !prev)}
-                      >
-                        {viewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-                      </Button>
-                    </div>
-                  </FormControl>
-
-                  <FormMessage />
-
-                  <Button
-                    size='sm'
-                    variant='link'
-                    className='font-normal px-0'
-                    asChild
-                  >
-                    <Link href='/auth/forgot'>Esqueci minha senha</Link>
-                  </Button>
-                </FormItem>
-              )}
-            />
           </div>
 
           <Button
@@ -121,10 +76,16 @@ export const LoginForm = () => {
             className='w-full text-white font-bold'
             disabled={isPending}
           >
-            Entrar no sistema
+            Recuperar
           </Button>
         </form>
       </Form>
+
+      <div className='flex items-center justify-center pt-4'>
+        <Button size='sm' variant='link' className='font-normal px-0' asChild>
+          <Link href='/auth/login'>Voltar</Link>
+        </Button>
+      </div>
     </CardWrapper>
   )
 }
