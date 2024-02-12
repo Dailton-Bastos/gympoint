@@ -28,6 +28,7 @@ export const forgot = async (values: z.infer<typeof forgotSchema>) => {
   await sendPasswordResetEmail({
     email: passwordResetToken.email,
     token: passwordResetToken.token,
+    userName: existingUser.name,
   })
 
   return { success: 'E-mail enviado com sucesso!' }
