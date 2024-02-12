@@ -14,3 +14,9 @@ export const forgotSchema = z.object({
     message: 'Email obrigatório',
   }),
 })
+
+export const newPasswordSchema = z.object({
+  password: z.string().min(8, {
+    message: 'Mínimo de 8 caracteres',
+  }),
+})

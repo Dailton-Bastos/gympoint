@@ -1,3 +1,4 @@
+import ConfirmationResetPassword from '@/components/emails/ConfirmationResetPassword'
 import ResetPassword from '@/components/emails/ResetPassword'
 import { sendMail } from '@/lib/mail'
 import { render } from '@react-email/render'
@@ -19,5 +20,19 @@ export const sendPasswordResetEmail = async ({
     to: email,
     subject: 'Recupere sua senha',
     body: render(ResetPassword({ resetLink, email, userName })),
+  })
+}
+
+export const sendConfirmationPasswordResetEmail = async ({
+  email,
+  userName,
+}: {
+  email: string
+  userName: string | null
+}) => {
+  await sendMail({
+    to: email,
+    subject: 'Alteração de senha',
+    body: render(ConfirmationResetPassword({ email, userName })),
   })
 }
