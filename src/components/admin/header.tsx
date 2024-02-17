@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { Navbar } from '@/components/admin/navbar'
+import { UserInfo } from '@/components/auth/user-info'
 import { Logo } from '@/components/shared/Logo'
-import { Button } from '@/components/ui/button'
 
 export const Header = () => {
   return (
@@ -14,10 +14,7 @@ export const Header = () => {
           <Navbar />
         </div>
 
-        <div className='flex flex-col'>
-          <p>Dailton Bastos</p>
-          <Button variant='link'>sair do sistema</Button>
-        </div>
+        <UserInfo />
       </div>
     </header>
   )
