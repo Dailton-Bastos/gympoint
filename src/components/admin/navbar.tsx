@@ -53,6 +53,16 @@ export const Navbar = () => {
           </Button>
         </Can>
       ))}
+
+      <Can allowedRole='ADMIN'>
+        <Button
+          variant='link'
+          asChild
+          className='font-semibold text-[15px] p-0 text-red hover:no-underline'
+        >
+          <Link href='/admin/users'>USUÁRIOS</Link>
+        </Button>
+      </Can>
     </nav>
   )
 }
