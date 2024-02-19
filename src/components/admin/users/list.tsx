@@ -14,9 +14,20 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import type { UserRole } from '@prisma/client'
 import Link from 'next/link'
 
-export const UsersList = () => {
+type Props = {
+  allUsers: Array<{
+    id: string
+    name: string | null
+    email: string
+    image: string | null
+    role: UserRole
+  }> | null
+}
+
+export const UsersList = ({ allUsers }: Props) => {
   return (
     <div className='w-full h-full'>
       <div className='flex items-center justify-between w-full'>
@@ -47,48 +58,56 @@ export const UsersList = () => {
         </div>
       </div>
 
-      <div className='bg-white shadow mt-5 rounded overflow-hidden'>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className='font-bold'>NOME</TableHead>
-              <TableHead className='font-bold'>E-MAIL</TableHead>
-              <TableHead className='font-bold'>PERFIL</TableHead>
-              <TableHead></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className='py-2 px-4 w-2/6'>Dailton Bastos</TableCell>
-              <TableCell className='py-2 px-4 w-2/6'>
-                dailtonbastos@gmail.com
-              </TableCell>
-              <TableCell className='py-2 px-4'>Administrador</TableCell>
-              <TableCell className='py-2 px-4'>
-                <div className='flex items-center gap-x-1 justify-center'>
-                  <Button
-                    asChild
-                    variant='link'
-                    className='font-normal text-sm text-blue-400'
-                  >
-                    <Link href='/'>
-                      <TbUserEdit size={18} className='mr-2' /> editar
-                    </Link>
-                  </Button>
+      {allUsers && (
+        <div className='bg-white shadow mt-5 rounded overflow-hidden'>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className='font-bold'>NOME</TableHead>
+                <TableHead className='font-bold'>E-MAIL</TableHead>
+                <TableHead className='font-bold'>PERFIL</TableHead>
+                <TableHead></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {allUsers?.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell className='py-2 px-4 w-2/6'>
+                    {user?.name}
+                  </TableCell>
+                  <TableCell className='py-2 px-4 w-2/6'>
+                    {user?.email}
+                  </TableCell>
+                  <TableCell className='py-2 px-4'>
+                    {user?.role === 'ADMIN' ? 'Administrador' : 'Colaborador'}
+                  </TableCell>
+                  <TableCell className='py-2 px-4'>
+                    <div className='flex items-center gap-x-1 justify-center'>
+                      <Button
+                        asChild
+                        variant='link'
+                        className='font-normal text-sm text-blue-400'
+                      >
+                        <Link href={`/admin/users/edit/${user.id}`}>
+                          <TbUserEdit size={18} className='mr-2' /> editar
+                        </Link>
+                      </Button>
 
-                  <Button
-                    variant='link'
-                    className='font-normal text-sm text-red'
-                  >
-                    <TbUserCancel size={18} className='mr-2' />
-                    excluir
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
+                      <Button
+                        variant='link'
+                        className='font-normal text-sm text-red'
+                      >
+                        <TbUserCancel size={18} className='mr-2' />
+                        excluir
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
     </div>
   )
 }

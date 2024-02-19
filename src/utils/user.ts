@@ -21,4 +21,14 @@ const getUserById = async (id: string): Promise<User | null> => {
   }
 }
 
-export { getUserByEmail, getUserById }
+const getAllUsers = async (): Promise<User[] | null> => {
+  try {
+    const users = await db.user.findMany()
+
+    return users
+  } catch (error) {
+    return null
+  }
+}
+
+export { getUserByEmail, getUserById, getAllUsers }
