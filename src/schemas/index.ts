@@ -1,3 +1,4 @@
+import { UserRole } from '@prisma/client'
 import * as z from 'zod'
 
 export const loginSchema = z.object({
@@ -19,4 +20,14 @@ export const newPasswordSchema = z.object({
   password: z.string().min(8, {
     message: 'Mínimo de 8 caracteres',
   }),
+})
+
+export const newUserSchema = z.object({
+  email: z.string().email({
+    message: 'Email obrigatório',
+  }),
+  name: z.string().trim().min(1, {
+    message: 'Nome obrigatório',
+  }),
+  role: z.enum([UserRole.ADMIN, UserRole.USER]),
 })
