@@ -63,3 +63,10 @@ model VerificationToken {
 
   @@unique([email, token])
 }
+
+model Plan {
+  id       String @id @default(cuid())
+  title    String
+  duration Int
+  value    Int
+}

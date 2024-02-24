@@ -15,6 +15,14 @@ async function main() {
       role: 'USER',
     },
   })
+
+  await db.plan.create({
+    data: {
+      title: 'Start',
+      duration: 1,
+      value: 12900,
+    },
+  })
 }
 
 main()
