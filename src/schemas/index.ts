@@ -31,3 +31,15 @@ export const newUserSchema = z.object({
   }),
   role: z.enum([UserRole.ADMIN, UserRole.USER]),
 })
+
+export const newPlanSchema = z.object({
+  title: z.string().trim().min(1, {
+    message: 'Título obrigatório',
+  }),
+  duration: z.number({
+    description: 'Duração obrigatória',
+  }),
+  value: z.coerce.number().min(0.01, {
+    message: 'Preço mensal obrigatório',
+  }),
+})

@@ -9,6 +9,9 @@ export function formatPrice(price: number) {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
+    currencyDisplay: 'symbol',
+    currencySign: 'standard',
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(price / 100)
 }
